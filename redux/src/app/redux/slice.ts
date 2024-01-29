@@ -1,13 +1,13 @@
 import { createSlice, nanoid, current, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-// Define the initial state using that type
-const storedData = localStorage.getItem("data");
-const parsedData = storedData ? JSON.parse(storedData) : [];
+
+const storedData:any = localStorage.getItem("data");
+const parsedData:any = storedData ? JSON.parse(storedData) : [];
 
 const initialState = {
   fetchData:[],
-  user: parsedData || [],
+  user: parsedData,
 };
 
 export const fetchData = createAsyncThunk("fetchData", async () => {
@@ -36,7 +36,7 @@ export const Slice = createSlice({
     }
   },
   extraReducers: (build) => {
-    build.addCase(fetchData.fulfilled, (state: any, action) => {
+    build.addCase(fetchData.fulfilled, (state: any, action:PayloadAction<string>) => {
 
       state.isloading = false;
       state.fetchData = action.payload
@@ -46,7 +46,5 @@ export const Slice = createSlice({
 
 export const { addUser, deleteUser } = Slice.actions
 
-
-// export const selectCount = (state: RootState) => state.counter.value
 
 export default Slice.reducer;

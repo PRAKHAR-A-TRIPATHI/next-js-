@@ -2,14 +2,14 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchData } from '../redux/slice'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
 const page = () => {
-    const dispatch = useDispatch()
-    const data = useSelector((data: any) => data.usersData.fetchData)
+    const dispatch = useAppDispatch()
+    const data = useAppSelector((data:any) => data.usersData.fetchData)
     useEffect(() => {
-        dispatch(fetchData())
-    })
-    console.log(data)
+         dispatch(fetchData()); 
+    },[])
     return (
         <div>
             <div className='p-2 m-2 flex justify-center items-center'>

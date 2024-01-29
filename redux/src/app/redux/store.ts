@@ -1,16 +1,18 @@
-import { configureStore } from '@reduxjs/toolkit'
 import users from './slice'
 import todoReducer from './todoslice'
+import { configureStore } from '@reduxjs/toolkit'
 
+export const store = () => {
+  return configureStore({
+    reducer:{
+      usersData:users,
+      todo:todoReducer
+    }
+  })
+}
 
-export const store = configureStore({
-  reducer:{
-    usersData:users,
-    todo:todoReducer
-  }
-})
-
+// Infer the type of makeStore
+export type AppStore = ReturnType<typeof store>
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<AppStore['getState']>
+export type AppDispatch = AppStore['dispatch']

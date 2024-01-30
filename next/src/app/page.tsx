@@ -15,7 +15,7 @@ export default function Home() {
   }, []);
   function handleChange(e: any) {
     setSerch(e.target.value)
-    router.push(`#${e.target.value}`)
+    router.push(`#${e.target.value}`) 
   }
   return (
     <>

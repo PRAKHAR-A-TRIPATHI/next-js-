@@ -4,22 +4,25 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { fetchData } from "./redux/slice";
 
-
 export default function Home() {
   const data = useAppSelector((state: any) => state.data)
-  const [serch, setSerch] = useState("")
+  const [serch, setSerch] = useState("a")
   const dispatch = useAppDispatch()
   const router = useRouter()
   useEffect(() => {
     dispatch(fetchData())
   }, []);
   function handleChange(e: any) {
-    setSerch(e.target.value)
-    router.push(`#${e.target.value}`) 
+    if (e.target.value === "") {
+      setSerch("a")
+    } else {
+      setSerch(e.target.value)
+    }
+    router.push(`#${e.target.value}`)
   }
   return (
     <>
-      <div className={`${Number(serch) > 500 || Number(serch) < 0 ? "bg-red-500" : " bg-black"} absolute `}>
+      <div className={`${Number(serch) > 500 || Number(serch) <= 0 ? "bg-red-500" : " bg-black"} absolute w-full`}>
         <div className='sticky top-2'>
           <input value={serch} onChange={handleChange} className="text-black" type="number" />
         </div>
@@ -29,7 +32,7 @@ export default function Home() {
               <li key={value.id} className={`text-white text-xl font-bold m-2 w-full flex justify-between ${Number(serch) == index + 1 && "bg-blue-500"}`}
                 id={`${value.id}`}>
                 <div >
-                  {index + 1}.  {value.name}
+                  {value.id}.  {value.name}
 
                 </div>
               </li>
